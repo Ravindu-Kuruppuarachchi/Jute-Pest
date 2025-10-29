@@ -1,349 +1,135 @@
-# Jute Pest Classification using Transfer Learning
+# 🌾 Jute Pest Detection using Transfer Learning
 
-![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15-orange.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+An AI-based pest detection system for jute crops using fine-tuned pre-trained CNNs (VGG19 & InceptionV3) to identify 17 different pest types with high accuracy.
 
-Deep learning-based image classification system for identifying pests in jute plants using state-of-the-art pre-trained convolutional neural networks (ResNet50 and InceptionV3).
+## 🎯 Overview
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Dataset](#dataset)
-- [Model Architecture](#model-architecture)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Results](#results)
-- [Project Structure](#project-structure)
-- [Requirements](#requirements)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
-
-## 🌾 Overview
-
-This project implements a deep learning solution for automated classification of pests affecting jute plants. Using transfer learning with pre-trained models (ResNet50 and InceptionV3), the system achieves high accuracy in identifying different types of jute pests, which is crucial for early detection and agricultural pest management.
-
-### Key Highlights
-
-- **Transfer Learning**: Leverages ImageNet pre-trained weights
-- **State-of-the-art Models**: ResNet50 and InceptionV3 architectures
-- **GPU Acceleration**: Optimized for CUDA-enabled GPUs
-- **Comprehensive Evaluation**: Includes accuracy, precision, recall, F1-score, and confusion matrices
-- **Data Augmentation**: Advanced preprocessing for better generalization
+Automated jute pest identification system using transfer learning to detect pests early and help farmers make informed pest management decisions.
 
 ## ✨ Features
 
-- 🔄 Transfer learning with fine-tuning
-- 📊 Detailed performance metrics and visualizations
-- 🎯 Multi-class pest classification
-- 📈 Training progress monitoring with callbacks
-- 💾 Automatic model checkpointing
-- 🖼️ Data augmentation pipeline
-- 📉 Loss and accuracy tracking
-- 🔍 Confusion matrix analysis
+- Transfer learning with VGG19 & InceptionV3
+- 17 pest class classification
+- Data augmentation for improved accuracy
+- Early stopping & learning rate scheduling
+- Google Drive integration
+- Comprehensive evaluation metrics
 
-## 📦 Dataset
+## 📊 Results
 
-The Jute Pest Dataset contains images of various pests affecting jute plants, organized into the following structure:
+| Model | Accuracy | Precision | Recall | F1-Score |
+|-------|----------|-----------|--------|----------|
+| VGG19 | 84% | 84% | 84% | 85% |
+| InceptionV3 | 97% | 97% | 97% | 97% |
 
-```
-Jute_Pest_Dataset/
-├── train/          # Training images (70%)
-│   ├── class_1/
-│   ├── class_2/
-│   └── ...
-├── valid/          # Validation images (15%)
-│   ├── class_1/
-│   ├── class_2/
-│   └── ...
-└── test/           # Test images (15%)
-    ├── class_1/
-    ├── class_2/
-    └── ...
-```
-
-### Dataset Split
-- **Training**: 70%
-- **Validation**: 15%
-- **Testing**: 15%
-
-## 🏗️ Model Architecture
-
-### ResNet50 Transfer Learning
-```
-Input (224×224×3)
-    ↓
-[ResNet50 Base - Pre-trained on ImageNet]
-    ↓
-Global Average Pooling
-    ↓
-Dense(256) + ReLU
-    ↓
-Dropout(0.5)
-    ↓
-Dense(num_classes) + Softmax
-```
-
-### InceptionV3 Transfer Learning
-```
-Input (224×224×3)
-    ↓
-[InceptionV3 Base - Pre-trained on ImageNet]
-    ↓
-Global Average Pooling
-    ↓
-Dense(512) + ReLU + Batch Normalization
-    ↓
-Dropout(0.5)
-    ↓
-Dense(256) + ReLU
-    ↓
-Dropout(0.3)
-    ↓
-Dense(num_classes) + Softmax
-```
-
-## 🚀 Installation
-
-### Prerequisites
-
-- Python 3.8 or higher
-- NVIDIA GPU with CUDA support (recommended)
-- CUDA Toolkit 11.8
-- cuDNN 8.6
-
-### Step 1: Clone the Repository
+## 📦 Installation
 
 ```bash
 git clone https://github.com/Ravindu-Kuruppuarachchi/Jute-Pest.git
 cd Jute-Pest
-```
-
-### Step 2: Create Virtual Environment
-
-```bash
-# Using venv
-python -m venv venv
-
-# Activate on Windows
-venv\Scripts\activate
-
-# Activate on Linux/Mac
-source venv/bin/activate
-```
-
-### Step 3: Install Dependencies
-
-```bash
 pip install -r requirements.txt
 ```
 
-### Step 4: Verify GPU Setup (Optional but Recommended)
+## 🚀 Quick Start
 
+### Google Colab
+1. Mount Google Drive
+2. Update dataset paths
+3. Run cells sequentially
+
+### Local Machine
 ```bash
-python -c "import tensorflow as tf; print('GPU Available:', tf.config.list_physical_devices('GPU'))"
+python jute_pest_detection.py
 ```
 
-## 💻 Usage
+## 📁 Dataset Structure
 
-### Training Models
-
-```bash
-python train.py
+```
+Jute_Pest_Dataset_Split/
+├── train/
+├── val/
+└── test/
 ```
 
-### Training with Custom Parameters
+**Dataset**: [Kaggle - Jute Pest Dataset](https://www.kaggle.com/datasets/simulhasantalukder/jutepestindentification)
+
+## 🧠 Model Architecture
+
+```
+Pre-trained Model (ImageNet)
+    ↓
+Global Average Pooling
+    ↓
+Dropout (30%)
+    ↓
+Dense Output (17 classes)
+```
+
+## ⚙️ Key Parameters
 
 ```python
-from main import train_model
-
-# Train ResNet50
-history_resnet = train_model(
-    resnet_model,
-    train_gen,
-    valid_gen,
-    model_name="ResNet50",
-    epochs=100,
-    learning_rate=0.0001
-)
-
-# Train InceptionV3
-history_inception = train_model(
-    inception_model,
-    train_gen,
-    valid_gen,
-    model_name="InceptionV3",
-    epochs=100,
-    learning_rate=0.0001
-)
+IMG_SIZE = 224
+BATCH_SIZE = 16
+EPOCHS = 50
+LEARNING_RATE = 0.001
 ```
 
-### Model Evaluation
+## 📝 Usage Example
 
 ```python
-from main import evaluate_model
+from tensorflow.keras.applications import InceptionV3
+import tensorflow as tf
 
-# Evaluate on test set
-results = evaluate_model(model, test_gen, "ResNet50", class_names)
+# Load pre-trained model
+base_model = InceptionV3(weights='imagenet', include_top=False)
+
+# Fine-tune for jute pest classification
+model = tf.keras.Sequential([
+    base_model,
+    tf.keras.layers.GlobalAveragePooling2D(),
+    tf.keras.layers.Dropout(0.3),
+    tf.keras.layers.Dense(17, activation='softmax')
+])
+
+model.compile(optimizer='adam', loss='categorical_crossentropy', 
+              metrics=['accuracy'])
 ```
 
-### Making Predictions
+## 📂 Output Files
 
-```python
-from tensorflow import keras
-import numpy as np
-from tensorflow.keras.preprocessing import image
-
-# Load trained model
-model = keras.models.load_model('resnet50_best_model.h5')
-
-# Load and preprocess image
-img = image.load_img('path/to/image.jpg', target_size=(224, 224))
-img_array = image.img_to_array(img) / 255.0
-img_array = np.expand_dims(img_array, axis=0)
-
-# Predict
-predictions = model.predict(img_array)
-predicted_class = np.argmax(predictions[0])
-confidence = predictions[0][predicted_class]
-
-print(f"Predicted Class: {predicted_class}")
-print(f"Confidence: {confidence:.2%}")
-```
-
-## 📊 Results
-
-### Model Performance Comparison
-
-| Model | Test Accuracy | Test Loss | Precision | Recall | F1-Score |
-|-------|--------------|-----------|-----------|--------|----------|
-| ResNet50 | XX.XX% | X.XXXX | X.XX | X.XX | X.XX |
-| InceptionV3 | XX.XX% | X.XXXX | X.XX | X.XX | X.XX |
-
-### Training Metrics
-
-Training curves, confusion matrices, and performance comparisons are automatically generated and saved in the project directory:
-
-- `model_comparison_training.png` - Training and validation loss/accuracy curves
-- `confusion_matrices_comparison.png` - Confusion matrices for all models
-- `performance_comparison.png` - Bar chart comparing model metrics
-
-## 📝 Requirements
-
-```txt
-tensorflow==2.15.0
-numpy>=1.23.0
-matplotlib>=3.5.0
-seaborn>=0.12.0
-scikit-learn>=1.2.0
-Pillow>=9.0.0
-pandas>=1.5.0
-```
-
-## 🔧 Configuration
-
-### Training Hyperparameters
-
-```python
-# Default configuration
-IMG_HEIGHT = 224
-IMG_WIDTH = 224
-BATCH_SIZE = 32
-EPOCHS = 100
-LEARNING_RATE = 0.0001
-DROPOUT_RATE = 0.5
-
-# Data Augmentation
-ROTATION_RANGE = 20
-WIDTH_SHIFT_RANGE = 0.2
-HEIGHT_SHIFT_RANGE = 0.2
-ZOOM_RANGE = 0.2
-HORIZONTAL_FLIP = True
-```
-
-### Callbacks
-
-- **Early Stopping**: Monitors validation accuracy (patience=15)
-- **Learning Rate Reduction**: Factor=0.5, patience=5
-- **Model Checkpoint**: Saves best model based on validation accuracy
-- **TensorBoard**: Real-time training visualization
-
-## 🎯 Performance Optimization
-
-### GPU Configuration
-
-The code automatically detects and uses GPU if available. For optimal performance:
-
-```python
-# Enable memory growth
-gpus = tf.config.list_physical_devices('GPU')
-for gpu in gpus:
-    tf.config.experimental.set_memory_growth(gpu, True)
-```
-
-### Mixed Precision Training (Optional)
-
-```python
-from tensorflow.keras import mixed_precision
-policy = mixed_precision.Policy('mixed_float16')
-mixed_precision.set_global_policy(policy)
-```
-
-## 📈 Monitoring Training
-
-### Using TensorBoard
-
-```bash
-tensorboard --logdir=./logs
-```
-
-Then open your browser to `http://localhost:6006`
+- `saved_models/vgg19_model/` - Trained VGG19 model
+- `saved_models/inception_v3_model/` - Trained InceptionV3 model
+- `checkpoints/` - Best model checkpoints
+- `evaluation_metrics.json` - Performance metrics
 
 ## 🐛 Troubleshooting
 
-### GPU Not Detected
-
-```bash
-# Check CUDA installation
-nvidia-smi
-
-# Verify TensorFlow GPU support
-python -c "import tensorflow as tf; print(tf.test.is_built_with_cuda())"
-```
-
-### Out of Memory Error
-
-Reduce batch size in the configuration:
+**Eager Execution Error:**
 ```python
-BATCH_SIZE = 16  # or 8
+tf.compat.v1.enable_eager_execution()
+tf.config.run_functions_eagerly(True)
 ```
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Authors
-
-- **Ravindu Kuruppuarachchi** - [GitHub](https://github.com/Ravindu-Kuruppuarachchi)
-
-## 🙏 Acknowledgments
-
-- **Assignment**: EN3150 - Neural Networks and Deep Learning
-- **Instructor**: Sampath K. Perera
-- **Institution**: University of Moratuwa
-- **Dataset**: Jute Pest Dataset
-- **Pre-trained Models**: ImageNet weights from TensorFlow/Keras
-- **Inspiration**: 
-  - [Stanford CS231n](https://cs231n.github.io/)
-  - [Deep Learning with Python](https://www.manning.com/books/deep-learning-with-python)
+**Out of Memory:**
+```python
+BATCH_SIZE = 8
+IMG_SIZE = 192
+```
 
 ## 📚 References
 
-1. He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep Residual Learning for Image Recognition. CVPR.
-2. Szegedy, C., Vanhoucke, V., Ioffe, S., Shlens, J., & Wojna, Z. (2016). Rethinking the Inception Architecture for Computer Vision. CVPR.
-3. Deng, J., Dong, W., Socher, R., Li, L. J., Li, K., & Fei-Fei, L. (2009). ImageNet: A large-scale hierarchical image database. CVPR.
+- [JutePestDetect Research Paper](https://arxiv.org/abs/2308.05179)
+- [Transfer Learning Guide](https://cs231n.github.io/transfer-learning/)
+- [TensorFlow Documentation](https://www.tensorflow.org/)
 
+## 📄 License
 
-**Last Updated**: October 2025
+MIT License
+
+## 👨‍💼 Author
+
+Ravindu Kuruppuarachchi
+
+---
+
+⭐ If helpful, please star the repository!
