@@ -2,13 +2,15 @@
 
 An AI-based pest detection system for jute crops using fine-tuned pre-trained CNNs (VGG19 & InceptionV3) to identify 17 different pest types with high accuracy.
 
+
+DenseNet121 shows strong performance with high feature reuse and parameter efficiency.
 ## 🎯 Overview
 
 Automated jute pest identification system using transfer learning to detect pests early and help farmers make informed pest management decisions.
 
 ## ✨ Features
 
-- Transfer learning with VGG19 & InceptionV3
+- Transfer learning with VGG19, InceptionV3 and DenseNet201
 - 17 pest class classification
 - Data augmentation for improved accuracy
 - Early stopping & learning rate scheduling
@@ -20,7 +22,8 @@ Automated jute pest identification system using transfer learning to detect pest
 | Model | Accuracy | Precision | Recall | F1-Score |
 |-------|----------|-----------|--------|----------|
 | VGG19 | 84% | 84% | 84% | 85% |
-| InceptionV3 | 97% | 97% | 97% | 97% |
+| InceptionV3 | 92% | 92% | 92% | 92% |
+| DenseNet | 96% | 96% | 96% | 96% |
 
 ## 📦 Installation
 
@@ -133,3 +136,4 @@ Ravindu Kuruppuarachchi
 ---
 
 ⭐ If helpful, please star the repository!
+
