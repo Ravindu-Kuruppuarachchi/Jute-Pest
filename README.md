@@ -2,8 +2,6 @@
 
 An AI-based pest detection system for jute crops using fine-tuned pre-trained CNNs (VGG19 & InceptionV3) to identify 17 different pest types with high accuracy.
 
-
-DenseNet121 shows strong performance with high feature reuse and parameter efficiency.
 ## 🎯 Overview
 
 Automated jute pest identification system using transfer learning to detect pests early and help farmers make informed pest management decisions.
@@ -136,4 +134,5 @@ Ravindu Kuruppuarachchi
 ---
 
 ⭐ If helpful, please star the repository!
+
 
